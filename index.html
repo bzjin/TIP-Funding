@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+	<meta charset="utf-8">
+	<title>TIP Funding Dashboard</title>
+
+	<!-- Sortable Library --> <script src="Sortable.min.js"></script>
+	<!-- D3 Library --> <script src="d3.v4.min.js"></script>
+	<!-- Google Fonts --> <link href="google-fonts.css" rel="stylesheet"> 
+	<!-- Jquery -->   <script src="jquery-1.12.4.min.js"></script>
+  	<script src="jquery-1.12.1-ui.js"></script>
+	<!-- Bootstrap--> <script src="bootstrap.min.js"></script> <link rel="stylesheet" href="bootstrap.min.css">
+
+	<link rel="stylesheet" href="app.css"/>
+	<script src="app.js"></script>
+</head>
+
+<body>
+	<div class="col-md-12">
+		<h1> TIP Funding Dashboard</h1>
+
+		<h2> Live Worksheet / Scenario Planning Tool</h2>
+			<h4> Filter by </h4>
+			<p>
+			<form action="">
+	 			<input type="radio" name="filter" value="proponent"> Proponent
+	  			<input type="radio" name="filter" value="subregion"> Subregion
+	  			<input type="radio" name="filter" value="tipId"> TIP ID
+	  			<input type="radio" name="filter" value="projectName"> Project Description		
+	   			<input type="radio" name="filter" value="investmentType"> Investment Type			
+	  			<input type="radio" name="filter" value="cost"> Total Cost
+			</form>
+			</p>
+			<div id="worksheet" class="col-md-12"></div>
+
+		<h2> Live Dashboard </h2>
+			<h4> Programming by FFY </h4>
+				<div id="programming" class="col-md-12"></div>
+			<h4> Funding Targets by FFY </h4>
+				<div id="CMAQ" class="col-md-4"></div>
+				<div id="HSIP" class="col-md-4"></div>
+				<div id="TAP" class="col-md-4"></div>
+			<h4> Funding Allocaton (5-Year TIP) </h4>
+				<p>Allocation by Investment Category by Percent <span>Stacked bar charts for both percent and count</span></p>
+				<p> Allocation by Geographic Region <span>Small map and bar chart</span> </p>
+				<p> Allocation by Community Type <span>Stacked bar charts for both percent and count</span></p>
+	</div>
+</body>
+
+</html>
