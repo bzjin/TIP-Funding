@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<title>TIP Funding Dashboard</title>
 
-	<!-- Sortable Library --> <script src="Sortable.min.js"></script>
 	<!-- D3 Library --> <script src="d3.v4.min.js"></script>
+    <!-- D3-Tip --> <script src="d3-tip.js"></script>
 	<!-- Google Fonts --> <link href="google-fonts.css" rel="stylesheet"> 
 	<!-- Jquery -->   <script src="jquery-1.12.4.min.js"></script>
   	<script src="jquery-1.12.1-ui.js"></script>
@@ -21,17 +21,40 @@
 		<h1> TIP Funding Dashboard</h1>
 
 		<h2> Live Worksheet / Scenario Planning Tool</h2>
-			<h4> Filter by </h4>
-			<p>
-			<form action="">
-	 			<input type="radio" name="filter" value="proponent"> Proponent
-	  			<input type="radio" name="filter" value="subregion"> Subregion
-	  			<input type="radio" name="filter" value="tipId"> TIP ID
-	  			<input type="radio" name="filter" value="projectName"> Project Description		
-	   			<input type="radio" name="filter" value="investmentType"> Investment Type			
-	  			<input type="radio" name="filter" value="cost"> Total Cost
-			</form>
-			</p>
+			<div class="dropdown">
+			  <button class="dropdown-toggle" type="button" data-toggle="dropdown">Sort by...
+			  <span class="caret"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="#">Proponent</a></li>
+			    <li><a href="#">Subregion</a></li>
+			    <li><a href="#">Investment Type</a></li>
+			    <li><a href="#">Total Cost</a></li>
+			    <li><a href="#">Earliest Advertisement Year</a></li>
+			  </ul>
+			</div>
+
+		    <div class="dropdown">
+			  <button class="dropdown-toggle" type="button" data-toggle="dropdown">Filter by Total Cost
+			  <span class="caret"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="#">Total Cost less than $20 Million</a></li>
+			    <li><a href="#">Total Cost more than $20 Million</a>
+			  </ul>
+			</div>
+
+			<div class="dropdown">
+			  <button class="dropdown-toggle" type="button" data-toggle="dropdown">Filter by Investment Type
+			  <span class="caret"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="#">Bicycle and/or Pedestrian</a></li>
+			    <li><a href="#">Complete Streets Roadway Reconstruction</a>
+			    <li><a href="#">Community Transportation / Parking / Clean Air Mobility</a>
+			    <li><a href="#">Intersection Improvement</a>
+			    <li><a href="#">Major Infrastructure</a>
+			  </ul>
+			</div>
+
+			<div id="static" class="col-md-12"></div>
 			<div id="worksheet" class="col-md-12"></div>
 
 		<h2> Live Dashboard </h2>
@@ -42,9 +65,13 @@
 				<div id="HSIP" class="col-md-4"></div>
 				<div id="TAP" class="col-md-4"></div>
 			<h4> Funding Allocaton (5-Year TIP) </h4>
-				<p>Allocation by Investment Category by Percent <span>Stacked bar charts for both percent and count</span></p>
-				<p> Allocation by Geographic Region <span>Small map and bar chart</span> </p>
-				<p> Allocation by Community Type <span>Stacked bar charts for both percent and count</span></p>
+				<p>Allocation by Investment Category by Percent</p>
+					<div id="investmentCategory" class="col-md-12"></div>
+				<p> Allocation by Geographic Region</p>
+					<div id="map" class="col-md-4"></div>
+					<div id="subregions" class="col-md-8"></div>
+				<p> Allocation by Community Type</p>
+					<div id="investmentCategory" class="col-md-12"></div>
 	</div>
 </body>
 

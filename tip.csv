@@ -1,48 +1,48 @@
-Proponent,TIP_ID,Project_Name,Investment_Category,Earliest_Advertisement_Year,Multiyear,Community_Type,Subregion,Other_Category_Of_Interest,Total_Target_Funds,Other_Funds ,Total_Cost_All_Fys,FFY_2016,FFY_2017,FFY_2018,FFY_2019,FFY_2020,FFY_2021,FFY_2022,FFY_2023_Beyond,Potential_Funding,Additional_Information
-Needham and Wellesley,603711,Rehabilitation/replacement of 6 bridges on I-95/Route 128 (add-a-lane - contract V),MI,2016,3,,IC,,31228183,,31228183,24197023,18060000,13168183,,,,,,,
-"Winchester, Stoneham, and Woburn",604652,Tri-Community Bikeway,B/P,2016,1,,IC,,,,,5429110,,,,,,,,CMAQ and TAP,
-Lexington,607409,Reconstruction on Massachusetts Ave.,CS,2016,1,,MAGIC,,,,,5200000,,,,,,,,CMAQ,
-Weymouth,605721,"Intersection improvements at Middle St., Libbey Industrial Pkwy and Tara Dr.",INT,2016,1,,SSC,,,,,937326,,,,,,,,CMAQ,
-Boston,606117,Traffic signal improvements at 9 locations,INT,2016,1,,IC,,,,,4654920,,,,,,,,,
-"Bedford, Billerica, and Burlington",29492,"Middlesex Turnpike improvements, phase III",MI,2016,2,,NSPC,,14043606,1000000,15043606,21691442,14043606,,,,,,,,"cost increase of $7438700 in FFY 2017; AC over FFYs 2016-17"
-Weymouth and Abington,601630,Reconstruction and widening on Route 18 (Main St.)*,MI,2016,4,,SSC,,54581758,14771760,69353518,4800000,17550000,25731758,11300000,,,,,HSIP,"cost increase of $18834871; AC over FFYs 2016-19"
-Somerville and Medford,N/A,Green Line Extension project (phase 2) (or phase 1),MI,2016,6,,IC,,181900000,,181900000,8100000,29900000,40000000,40000000,40000000,32000000,,,CMAQ,$190m flexed to transit
-Southborough,604989,Reconstruction of Main St. (Route 30),CS,2018,1,,MW,,6862752,,6862752,,6862752,,,,,,,CMAQ,high risk (w/out ROW): remove from TIP
-Woburn,604935,Reconstruction of Montvale Ave.,MI,2017,1,,NSPC,,4752838,,4752838,,4752838,,,,,,,HSIP,
-Brookline,605110,Intersection and signal improvements at Route 9 and Village Square (Gateway East),CS,2018,1,,IC,,4818649,1000000,5818649,,,4818649,,,,,,CMAQ,high risk for FFY17: move to FFY 2018
-Marlborough,604810,Reconstruction of Route 85 (Maple St.),CS,2018,1,,MW,,5613636,,5613636,,,5613636,,,,,,"CMAQ ($2,000,000), HSIP",move to FFY 2018 because of cost overruns of other projects
-Hingham  ,607309,Reconstruction and related work on Derby St.,CS,2017,1,,SSC,,4927769,,4927769,,4927769,,,,,,,HSIP,"cost increase of $933,482"
-Hingham (MassDOT),600518,"Intersection improvements at Derby St., Whiting St. (Route 53) and Gardner St.",INT,2018,1,,SSC,,3057735,,3057735,,,3057735,,,,,,HSIP,may be ready in FFY17
-Newton and Needham,606635,"Reconstruction of Highland Ave., Needham St. and Charles River bridge",MI,2019,1,,IC,,15982188,,15982188,,,,15982188,,,,,,move to FFY 2019 because of cost overruns of other projects
-Hopkinton,606043,Signal and intersection improvements on Route 135,CS,2019,1,,SWAP,,8501376,,8501376,,,,8501376,,,,,HSIP,"cost increase of $362,560"
-Everett,607652,Reconstruction of Ferry St.,CS,2020,1,,IC,,7244124,,7244124,,,,,7244124,,,,HSIP,
-Natick,605034,Reconstruction of Route 27 (North Main St.),CS,2020,1,,MW,,15459553,,15459553,,,,,15459553,,,,HSIP,move to FFY 2020 because of cost overruns; address cost increase of $730K
-Boston,606453,Improvements on Boylston St.,CS,2019,1,,IC,,7898384,,7898384,,,,7898384,,,,,HSIP,"address cost increase of $524,900"
-Milford,607428,Resurfacing and intersection improvements on Route 16 (Main St.),CS,2019,1,,SWAP,,3149619,,3149619,,,,3149619,,,,,HSIP,
-Lynn,602077,Reconstruction on Route 129 (Lynnfield St.),CS,2019,1,,NSTF,,4762760,,4762760,,,,4762760,,,,,HSIP,"move to FFY 2020 because of cost overruns; cost increase of $873,454"
-Woburn,604996,"Bridge replacement, New Boston St. over MBTA",MI,2021,1,,NSPC,,17784392,,17784392,,,,,,17784392,,,HSIP,"move to FFY 2021 due to cost overruns; address cost increase of $6 million"
-Boston,606226,Reconstruction of Rutherford Ave.,MI,2021,5,,IC,,7000000,,7000000,,,,,,7000000,,,HSIP,not in the CIP; move to FFY 2021
-Ashland,604123,Reconstruction on Route 126 (Pond St.),CS,2020,1,,MW,,15532405,,15532405,,,,,15532405,,,,,may be ready in FFY19
-Walpole (MassDOT),602261,Reconstruction on Route 1A (Main St.),CS,2020,1,,TRIC,,18584373,,18584373,,,,,18584373,,,,CMAQ,may be ready in FFY18
-Hull,601607,Reconstruction of Atlantic Ave.,CS,2017,1,,IC,,5917592,,5917592,,5917592,5976768,6036536,6096901,6157870,,,,"CS Investment Program; project score: 36 (not first-tier CS roadway)"
-Holbrook,606501,Reconstruction of Union St. (Route 139),CS,2017,1,,SSC,,1042731,1527250,2569981,,1042731,1053159,1063690,1074327,1085071,,,,"CS Investment Program; project score: 46 (5th highest CS roadway)"
-Natick,605313,"Bridge replacement, Route 27 (North Main St.) over Route 9 (Worcester St.)",MI,2018,1,,MW,,19241634,,19241634,,,19241634,19434050,19628390,19824674,,,,
-Danvers,602310,Reconstruction on Collins St.,CS,2018,1,,NSPC,,5390446,,5390446,,,5390446,5444350,5498794,5553782,,,,"CS Investment Program; project score: 51 (4th highest CS roadway)"
-Dedham,607901,Pedestrian improvements along Elm St. and Rustcraft Rd. corridors,CS,2018,1,,TRIC,,2314102,,2314102,,,2314102,2337243,2360615,2384222,,,,"CS Investment Program; project score: 45 (7th highest CS roadway)"
-Norwood,606130,Intersection improvements at Route 1A and Upland Rd/Washington St. and Prospect St./Fulton St.,INT,2018,1,,TRIC,,3406406,,3406406,,,3406406,3440470,3474874,3509623,,,,"INT Investment Program; project score: 47 (3rd highest intersx.)"
-Sudbury,607249,Intersection improvements at Route 20 and Landham Rd.,INT,2018,1,,MW,,1721252,,1721252,,,1721252,1738465,1755849,1773408,,,,"INT Investment Program; project score: 37 (6th highest intersx.)"
-Salem,608352,Canal St. Rail Trail construction (phase 2),B/P,2018,1,,NSTF,,2496000,,2496000,,,2496000,2520960,2546170,2571631,,,,B/P Investment Program
-Framingham,608228,Reconstruction of Union Ave.,CS,2019,1,,MW,,9304652,,9304652,,,,9304652,9397699,9491676,,,HSIP,"CS Investment Program;project score: 60 (tied 2nd highest CS roadway)"
-Boston,605789,Reconstruction of Melnea Cass Boulevard,CS and MI,2019,1,,IC,,7853499,17444339,25297839,,,,7853499,7932034,8011355,,,CMAQ,CS Investment Program; project scores roughly 61 points (2nd highest); list in LRTP as MI.
-Saugus (MassDOT),601513,Interchange reconstruction at Walnut St. and Route 1 (phase II),MI,2020,1,,IC,,22026100,,22026100,,,,,22026100,22246361,,,HSIP,
-Watertown,607777,Reconstruction of Route 16 (Mount Auburn St.),CS,2020,1,,IC,,13760602,,13760602,,,,,13760602,13898208,,,CMAQ,"CS Investment Program;project score: 71 (highest ranked CS roadway)"
-Beverly,608348,Rehabilitation of Bridge St.,CS,2020,1,,NSTF,,5939282,,5939282,,,,,5939282,5998675,,,CMAQ,"CS Investment Program;project score: 60 (tied 2nd highest CS roadway)"
-Newton,601704,Reconstruction and signal improvements on Walnut St.,CS,2020,1,,IC,,8195534,,8195534,,,,,8195534,8277489,,,CMAQ,"CS Investment Program; project score: 45 (6th highest CS roadway)"
-Beverly,608347,Intersection improvements at three locations,INT,2020,1,,NSTF,,3374592,,3374592,,,,,3374592,3408338,,,CMAQ,"INT Investment Program;project score: 63 (highest ranked intersx.)"
-Norwood,605857,Intersection improvements at Route 1 and University Ave./Everett St.,INT,2020,1,,TRIC,,6074266,,6074266,,,,,6074266,6135008,,,CMAQ,"INT Investment Program;project score: 55 (2nd highest intersx.)"
-Marlborough,604231,Intersection and signal improvements on Route 20 (East Main St./Boston Post Rd) at Concord Rd,INT,2020,1,,MW,,1919693,,1919693,,,,,1919693,1938890,,,CMAQ,"INT Investment Program;project score: 40 (4th highest intersx.)"
-Danvers and Peabody (MassDOT),604638,Mainline improvements on Route 128 (phase II),MI,2021,2,,NSTF,,27814557,,27814557,,,,,,27814557,,,CMAQ,
-Regionwide,N0,Complete Streets,CS,2021,1,,All,,28000000,,28000000,,,,,,28000000,,,CMAQ,CS Investment Program
-Regionwide,N1,Intersection Improvements,INT,2021,1,,All,,12000000,,12000000,,,,,,12000000,,,CMAQ,INT Investment Program
-Regionwide,N2,Bicycle Network and Pedestrian Connections,B/P,2021,1,,All,,5000000,,5000000,,,,,,5000000,,,CMAQ,B/P Investment Program
-Regionwide,N3,Community Transportation ,CT,2021,1,,All,,2000000,,2000000,,,,,,2000000,,,CMAQ,(Keep minimum of $1.5m)
+Proponent,TIP_ID,Project_Name,Investment_Category,Earliest_Advertisement_Year,Multiyear,Community_Type,Subregion,Other_Category_Of_Interest,Total_Target_Funds,Other_Funds ,Total_Cost_All_Fys,FFY_2016,FFY_2017,FFY_2018,FFY_2019,FFY_2020,FFY_2021,FFY_2022,FFY_2023_Beyond,Potential_Funding,Additional_Information,CMAQ,HSIP,TAP
+Needham and Wellesley,603711,Rehabilitation/replacement of 6 bridges on I-95/Route 128 (add-a-lane - contract V),MI,2016,3,,IC,,31228183,,31228183,,,,,,,,,,,0.6,0.25,0.15
+"Winchester, Stoneham, and Woburn",604652,Tri-Community Bikeway,B/P,2016,1,,IC,,5429110,,,,,,,,,,,CMAQ and TAP,,0.6,0.25,0.15
+Lexington,607409,Reconstruction on Massachusetts Ave.,CS,2016,1,,MAGIC,,5200000,,,,,,,,,,,CMAQ,,0.6,0.25,0.15
+Weymouth,605721,"Intersection improvements at Middle St., Libbey Industrial Pkwy and Tara Dr.",INT,2016,1,,SSC,,937326,,,,,,,,,,,CMAQ,,0.6,0.25,0.15
+Boston,606117,Traffic signal improvements at 9 locations,INT,2016,1,,IC,,4654920,,,,,,,,,,,,,0.6,0.25,0.15
+"Bedford, Billerica, and Burlington",29492,"Middlesex Turnpike improvements, phase III",MI,2016,2,,NSPC,,14043606,1000000,15043606,,,,,,,,,,"cost increase of $7438700 in FFY 2017; AC over FFYs 2016-17",0.6,0.25,0.15
+Weymouth and Abington,601630,Reconstruction and widening on Route 18 (Main St.)*,MI,2016,4,,SSC,,54581758,14771760,69353518,,,,,,,,,HSIP,"cost increase of $18834871; AC over FFYs 2016-19",0.6,0.25,0.15
+Somerville and Medford,123,Green Line Extension project (phase 2) (or phase 1),MI,2016,6,,IC,,181900000,,181900000,,,,,,,,,CMAQ,$190m flexed to transit,0.6,0.25,0.15
+Southborough,604989,Reconstruction of Main St. (Route 30),CS,2018,1,,MW,,6862752,,6862752,,,,,,,,,CMAQ,high risk (w/out ROW): remove from TIP,0.6,0.25,0.15
+Woburn,604935,Reconstruction of Montvale Ave.,MI,2017,1,,NSPC,,4752838,,4752838,,,,,,,,,HSIP,,0.6,0.25,0.15
+Brookline,605110,Intersection and signal improvements at Route 9 and Village Square (Gateway East),CS,2018,1,,IC,,4818649,1000000,5818649,,,,,,,,,CMAQ,high risk for FFY17: move to FFY 2018,0.6,0.25,0.15
+Marlborough,604810,Reconstruction of Route 85 (Maple St.),CS,2018,1,,MW,,5613636,,5613636,,,,,,,,,"CMAQ ($2,000,000), HSIP",move to FFY 2018 because of cost overruns of other projects,0.6,0.25,0.15
+Hingham  ,607309,Reconstruction and related work on Derby St.,CS,2017,1,,SSC,,4927769,,4927769,,,,,,,,,HSIP,"cost increase of $933,482",0.6,0.25,0.15
+Hingham (MassDOT),600518,"Intersection improvements at Derby St., Whiting St. (Route 53) and Gardner St.",INT,2018,1,,SSC,,3057735,,3057735,,,,,,,,,HSIP,may be ready in FFY17,0.6,0.25,0.15
+Newton and Needham,606635,"Reconstruction of Highland Ave., Needham St. and Charles River bridge",MI,2019,1,,IC,,15982188,,15982188,,,,,,,,,,move to FFY 2019 because of cost overruns of other projects,0.6,0.25,0.15
+Hopkinton,606043,Signal and intersection improvements on Route 135,CS,2019,1,,SWAP,,8501376,,8501376,,,,,,,,,HSIP,"cost increase of $362,560",0.6,0.25,0.15
+Everett,607652,Reconstruction of Ferry St.,CS,2020,1,,IC,,7244124,,7244124,,,,,,,,,HSIP,,0.6,0.25,0.15
+Natick,605034,Reconstruction of Route 27 (North Main St.),CS,2020,1,,MW,,15459553,,15459553,,,,,,,,,HSIP,move to FFY 2020 because of cost overruns; address cost increase of $730K,0.6,0.25,0.15
+Boston,606453,Improvements on Boylston St.,CS,2019,1,,IC,,7898384,,7898384,,,,,,,,,HSIP,"address cost increase of $524,900",0.6,0.25,0.15
+Milford,607428,Resurfacing and intersection improvements on Route 16 (Main St.),CS,2019,1,,SWAP,,3149619,,3149619,,,,,,,,,HSIP,,0.6,0.25,0.15
+Lynn,602077,Reconstruction on Route 129 (Lynnfield St.),CS,2019,1,,NSTF,,4762760,,4762760,,,,,,,,,HSIP,"move to FFY 2020 because of cost overruns; cost increase of $873,454",0.6,0.25,0.15
+Woburn,604996,"Bridge replacement, New Boston St. over MBTA",MI,2021,1,,NSPC,,17784392,,17784392,,,,,,,,,HSIP,"move to FFY 2021 due to cost overruns; address cost increase of $6 million",0.6,0.25,0.15
+Boston,606226,Reconstruction of Rutherford Ave.,MI,2021,5,,IC,,7000000,,7000000,,,,,,,,,HSIP,not in the CIP; move to FFY 2021,0.6,0.25,0.15
+Ashland,604123,Reconstruction on Route 126 (Pond St.),CS,2020,1,,MW,,15532405,,15532405,,,,,,,,,,may be ready in FFY19,0.6,0.25,0.15
+Walpole (MassDOT),602261,Reconstruction on Route 1A (Main St.),CS,2020,1,,TRIC,,18584373,,18584373,,,,,,,,,CMAQ,may be ready in FFY18,0.6,0.25,0.15
+Hull,601607,Reconstruction of Atlantic Ave.,CS,2017,1,,IC,,5917592,,5917592,,,,,,,,,,"CS Investment Program; project score: 36 (not first-tier CS roadway)",0.6,0.25,0.15
+Holbrook,606501,Reconstruction of Union St. (Route 139),CS,2017,1,,SSC,,1042731,1527250,2569981,,,,,,,,,,"CS Investment Program; project score: 46 (5th highest CS roadway)",0.6,0.25,0.15
+Natick,605313,"Bridge replacement, Route 27 (North Main St.) over Route 9 (Worcester St.)",MI,2018,1,,MW,,19241634,,19241634,,,,,,,,,,,0.6,0.25,0.15
+Danvers,602310,Reconstruction on Collins St.,CS,2018,1,,NSPC,,5390446,,5390446,,,,,,,,,,"CS Investment Program; project score: 51 (4th highest CS roadway)",0.6,0.25,0.15
+Dedham,607901,Pedestrian improvements along Elm St. and Rustcraft Rd. corridors,CS,2018,1,,TRIC,,2314102,,2314102,,,,,,,,,,"CS Investment Program; project score: 45 (7th highest CS roadway)",0.6,0.25,0.15
+Norwood,606130,Intersection improvements at Route 1A and Upland Rd/Washington St. and Prospect St./Fulton St.,INT,2018,1,,TRIC,,3406406,,3406406,,,,,,,,,,"INT Investment Program; project score: 47 (3rd highest intersx.)",0.6,0.25,0.15
+Sudbury,607249,Intersection improvements at Route 20 and Landham Rd.,INT,2018,1,,MW,,1721252,,1721252,,,,,,,,,,"INT Investment Program; project score: 37 (6th highest intersx.)",0.6,0.25,0.15
+Salem,608352,Canal St. Rail Trail construction (phase 2),B/P,2018,1,,NSTF,,2496000,,2496000,,,,,,,,,,B/P Investment Program,0.6,0.25,0.15
+Framingham,608228,Reconstruction of Union Ave.,CS,2019,1,,MW,,9304652,,9304652,,,,,,,,,HSIP,"CS Investment Program;project score: 60 (tied 2nd highest CS roadway)",0.6,0.25,0.15
+Boston,605789,Reconstruction of Melnea Cass Boulevard,CS and MI,2019,1,,IC,,7853499,17444339,25297839,,,,,,,,,CMAQ,CS Investment Program; project scores roughly 61 points (2nd highest); list in LRTP as MI.,0.6,0.25,0.15
+Saugus (MassDOT),601513,Interchange reconstruction at Walnut St. and Route 1 (phase II),MI,2020,1,,IC,,22026100,,22026100,,,,,,,,,HSIP,,0.6,0.25,0.15
+Watertown,607777,Reconstruction of Route 16 (Mount Auburn St.),CS,2020,1,,IC,,13760602,,13760602,,,,,,,,,CMAQ,"CS Investment Program;project score: 71 (highest ranked CS roadway)",0.6,0.25,0.15
+Beverly,608348,Rehabilitation of Bridge St.,CS,2020,1,,NSTF,,5939282,,5939282,,,,,,,,,CMAQ,"CS Investment Program;project score: 60 (tied 2nd highest CS roadway)",0.6,0.25,0.15
+Newton,601704,Reconstruction and signal improvements on Walnut St.,CS,2020,1,,IC,,8195534,,8195534,,,,,,,,,CMAQ,"CS Investment Program; project score: 45 (6th highest CS roadway)",0.6,0.25,0.15
+Beverly,608347,Intersection improvements at three locations,INT,2020,1,,NSTF,,3374592,,3374592,,,,,,,,,CMAQ,"INT Investment Program;project score: 63 (highest ranked intersx.)",0.6,0.25,0.15
+Norwood,605857,Intersection improvements at Route 1 and University Ave./Everett St.,INT,2020,1,,TRIC,,6074266,,6074266,,,,,,,,,CMAQ,"INT Investment Program;project score: 55 (2nd highest intersx.)",0.6,0.25,0.15
+Marlborough,604231,Intersection and signal improvements on Route 20 (East Main St./Boston Post Rd) at Concord Rd,INT,2020,1,,MW,,1919693,,1919693,,,,,,,,,CMAQ,"INT Investment Program;project score: 40 (4th highest intersx.)",0.6,0.25,0.15
+Danvers and Peabody (MassDOT),604638,Mainline improvements on Route 128 (phase II),MI,2021,2,,NSTF,,27814557,,27814557,,,,,,,,,CMAQ,,0.6,0.25,0.15
+Regionwide,234,Complete Streets,CS,2021,1,,All,,28000000,,28000000,,,,,,,,,CMAQ,CS Investment Program,0.6,0.25,0.15
+Regionwide,345,Intersection Improvements,INT,2021,1,,All,,12000000,,12000000,,,,,,,,,CMAQ,INT Investment Program,0.6,0.25,0.15
+Regionwide,456,Bicycle Network and Pedestrian Connections,B/P,2021,1,,All,,5000000,,5000000,,,,,,,,,CMAQ,B/P Investment Program,0.6,0.25,0.15
+Regionwide,567,Community Transportation ,CT,2021,1,,All,,2000000,,2000000,,,,,,,,,CMAQ,(Keep minimum of $1.5m),0.6,0.25,0.15
