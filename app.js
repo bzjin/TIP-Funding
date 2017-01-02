@@ -1,24 +1,27 @@
 var CTPS = {};
 CTPS.demoApp = {};
 var f = d3.format(",")
+var e = d3.format(".1f")
 
 //Using the queue.js library
 d3.queue()
   .defer(d3.csv, "tip.csv")
+  .defer(d3.csv, "targets.csv")
   .awaitAll(function(error, results){ 
-    CTPS.demoApp.generateWorksheet(results[0]);
-    CTPS.demoApp.generateProgramming(results[0]);
-    CTPS.demoApp.generateFunders(results[0], "CMAQ");
-    CTPS.demoApp.generateFunders(results[0], "HSIP");
-    CTPS.demoApp.generateFunders(results[0], "TAP");
+    CTPS.demoApp.generateWorksheet(results[0], results[1]);
+    CTPS.demoApp.generateProgramming(results[0], results[1]);
+    CTPS.demoApp.generateFunders(results[0], "CMAQ", results[1]);
+    CTPS.demoApp.generateFunders(results[0], "HSIP", results[1]);
+    CTPS.demoApp.generateFunders(results[0], "TAP", results[1]);
     CTPS.demoApp.generateBreakdowns(results[0]);
+    CTPS.demoApp.generateSubregions(results[0]);
 })
 
 var investment = d3.scaleOrdinal()
 				.domain(["B/P", "CS", "CT", "INT", "MI"])
 				.range(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e"])
 
-CTPS.demoApp.generateWorksheet = function(data) { 
+CTPS.demoApp.generateWorksheet = function(data, targets) { 
   var height = data.length * 50;   
   var static = d3.select("#static").append("svg")
                   .attr("width", "100%")
@@ -32,7 +35,7 @@ CTPS.demoApp.generateWorksheet = function(data) {
   var w = $("#worksheet").width();
 
   var categories = ["Proponent", "Subregion", "TIP ID", "Project Name", "Investment Type", "Total Cost"];
-  var yearLabels = ["FFY 2016", "FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 and Beyond",""];
+  var yearLabels = ["FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 and Beyond",""];
 
   var projectIDs = [];
   data.forEach(function(i){
@@ -55,7 +58,7 @@ CTPS.demoApp.generateWorksheet = function(data) {
               .range([0, 100, 180, 260, 460, 540, 620])
 
   var years = d3.scaleLinear()
-                .domain([2016, 2024])
+                .domain([2017, 2024])
                 .range([640, w - 10])
 
   var yearsL = d3.scalePoint() //labels years with "FFY"
@@ -185,7 +188,7 @@ CTPS.demoApp.generateWorksheet = function(data) {
 
  yearbins = [{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0}];   
 
- for (i = 2016; i < 2024; i++) { //appends grey rectangles
+ for (i = 2017; i < 2024; i++) { //appends grey rectangles
  	data.forEach(function(d){
     d.currentFunding = +d.Earliest_Advertisement_Year;
  		if (d.currentFunding <= i){
@@ -228,26 +231,25 @@ CTPS.demoApp.generateWorksheet = function(data) {
                 .style("fill", investment(d.Investment_Category))
 
               d.currentFunding = yearNum;
-              console.log(yearbins[yearNum - 2016], yearNum)
               updateFunctions(yearNum);
-              console.log(yearbins[yearNum - 2016])
-
-              var newData = data; 
 
               d3.selectAll(".current").remove();
 
-              CTPS.demoApp.generateProgramming(newData);
-              CTPS.demoApp.generateFunders(newData, "CMAQ");
-              CTPS.demoApp.generateFunders(newData, "HSIP");
-              CTPS.demoApp.generateFunders(newData, "TAP");
+              CTPS.demoApp.generateProgramming(data, targets);
+              CTPS.demoApp.generateFunders(data, "CMAQ", targets);
+              CTPS.demoApp.generateFunders(data, "HSIP", targets);
+              CTPS.demoApp.generateFunders(data, "TAP", targets);
+              CTPS.demoApp.generateBreakdowns(data);
+              CTPS.demoApp.generateSubregions(data);
           })
   		}
     function updateTotals (year) {
       if (+d.currentFunding == year){
-        yearbins[i - 2016].total += parseInt(+d.Total_Cost_All_Fys);
-        yearbins[i - 2016].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys);
-        yearbins[i - 2016].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys);
-        yearbins[i - 2016].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys);
+        if (i > 2018) { var multiplier = 1.04}
+        yearbins[i - 2017].total += parseInt(+d.Total_Cost_All_Fys);
+        yearbins[i - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys);
+        yearbins[i - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys);
+        yearbins[i - 2017].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys);
       }
     }
     updateTotals(i);
@@ -256,14 +258,14 @@ CTPS.demoApp.generateWorksheet = function(data) {
 
 function updateFunctions (year) {
   yearbins = [{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0}];   
-  for (i = 2016; i < 2023; i++) { //appends grey rectangles
+  for (i = 2017; i < 2023; i++) { //appends grey rectangles
     data.forEach(function(d){
       d.currentFunding == year;
       if (d.currentFunding == i){
-        yearbins[i - 2016].total += parseInt(+d.Total_Cost_All_Fys);
-        yearbins[i - 2016].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys);
-        yearbins[i - 2016].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys);
-        yearbins[i - 2016].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys);
+        yearbins[i - 2017].total += parseInt(+d.Total_Cost_All_Fys);
+        yearbins[i - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys);
+        yearbins[i - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys);
+        yearbins[i - 2017].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys);
       }
     })
 }}
@@ -369,7 +371,7 @@ function wrapt(text, width) {
 }
 
 
-CTPS.demoApp.generateProgramming = function(data) { 
+CTPS.demoApp.generateProgramming = function(data, targets) { 
   var programming = d3.select("#programming").append("svg")
                   .attr("width", "100%")
                   .attr("height", 300)
@@ -385,10 +387,10 @@ CTPS.demoApp.generateProgramming = function(data) {
     maxCostTotal[3].push(d.TAP);
   })
 
-  var yearLabels = ["FFY 2016", "FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 and Beyond",""];
+  var yearLabels = ["FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 and Beyond",""];
 
   var years = d3.scaleLinear()
-                .domain([2016, 2024])
+                .domain([2017, 2024])
                 .range([80, w - 50])
 
   var yearsL = d3.scalePoint() //labels years with "FFY"
@@ -426,23 +428,37 @@ CTPS.demoApp.generateProgramming = function(data) {
 
   yearbins.forEach(function(d){
     programming.append("rect")
-      .attr("x", years(yearbins.indexOf(d)+2016) + 40)
+      .attr("x", years(yearbins.indexOf(d)+2017) + 40)
       .attr("y", yScalePos(d.total))
       .attr("width", 50)
       .attr("height", yScaleHeight(d.total))
       .style("fill", "grey")
 
     programming.append("text")
-      .attr("x", years(yearbins.indexOf(d)+2016) + 65)
+      .attr("x", years(yearbins.indexOf(d)+2017) + 65)
       .attr("y", yScalePos(d.total) - 10)
       .style("fill", "black")
       .style("text-anchor", "middle")
       .text("$" + f(d.total))
   })
 
+  programming.selectAll(".targetsTotal")
+      .data(targets)
+      .enter()
+        .append("rect")
+        .attr("x", function(d){
+          return years(d.Year) + 40;
+        })
+        .attr("y", function(d) {
+          return yScalePos(d.Total_Target);
+        })
+        .attr("width", 50)
+        .attr("height", 3)
+        .style("fill", "red")
+
 }
 
-CTPS.demoApp.generateFunders = function(data, funder) { 
+CTPS.demoApp.generateFunders = function(data, funder, targets) { 
   var programming = d3.select("#" + funder).append("svg")
                   .attr("width", "100%")
                   .attr("height", 300)
@@ -450,10 +466,10 @@ CTPS.demoApp.generateFunders = function(data, funder) {
 
   var w = $("#" + funder).width();
   
-  var yearLabels = ["FFY 2016", "FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 and Beyond",""];
+  var yearLabels = ["FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 and Beyond",""];
 
   var years = d3.scaleLinear()
-                .domain([2016, 2024])
+                .domain([2017, 2024])
                 .range([80, w - 10])
 
   var yearsL = d3.scalePoint() //labels years with "FFY"
@@ -497,18 +513,205 @@ CTPS.demoApp.generateFunders = function(data, funder) {
 
   yearbins.forEach(function(d){
     programming.append("rect")
-      .attr("x", years(yearbins.indexOf(d)+2016) + 15)
+      .attr("x", years(yearbins.indexOf(d)+2017) + 15)
       .attr("y", yScalePos(d[funder]))
       .attr("width", 15)
       .attr("height", yScaleHeight(d[funder]))
       .style("fill", "grey")
 
     programming.append("text")
-      .attr("x", years(yearbins.indexOf(d)+2016) + 20)
+      .attr("x", years(yearbins.indexOf(d)+2017) + 20)
       .attr("y", yScalePos(d[funder]) - 5)
       .style("fill", "black")
       .style("font-size", 10)
       .style("text-anchor", "middle")
       .text("$" + f(d[funder]))
   })
+
+   programming.selectAll(".targets" + funder)
+      .data(targets)
+      .enter()
+        .append("rect")
+        .attr("x", function(d){
+          return years(d.Year) + 15;
+        })
+        .attr("y", function(d) {
+          return yScalePos(d[funder + "_Target"]);
+        })
+        .attr("width", 15)
+        .attr("height", 2)
+        .style("fill", "red")
+}
+
+CTPS.demoApp.generateBreakdowns = function(data) { 
+  var iTypes = [{ "type": "B/P", "amount": 0},
+               { "type": "CS", "amount": 0},
+               { "type": "CT", "amount": 0},
+               { "type": "INT", "amount": 0},
+               { "type": "MI", "amount": 0}];
+
+  var total = 0;
+
+  data.forEach(function(d){
+    iTypes.forEach(function(e){
+      if (d.Investment_Category == e.type && d.currentFunding != 2017 && d.currentFunding != 2023){
+        e.amount += +d.Total_Cost_All_Fys
+        total += +d.Total_Cost_All_Fys;
+      }
+    })
+  })
+
+
+  var programming = d3.select("#investmentCategory").append("svg")
+                  .attr("width", "100%")
+                  .attr("height", 100)
+                  .attr("class", "current")
+
+  var w = $("#investmentCategory").width();
+
+  var xScale = d3.scaleLinear()
+                .domain([0, total])
+                .range([80, w - 80])
+
+  var xScaleL = d3.scaleLinear()
+                .domain([0, total])
+                .range([0, w - 160])
+
+  programming.selectAll(".types")
+    .data(iTypes)
+    .enter()
+    .append("rect")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScale(0)}
+        if (d.type == "CS") {return xScale(iTypes[0].amount)}
+        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount)}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount)}
+        if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount)}
+      })
+      .attr("y", 60)
+      .attr("width", function(d){ return xScaleL(d.amount);})
+      .attr("height", 20)
+      .attr("fill", function(d){ return investment(d.type)})
+
+  programming.selectAll(".typeLabels")
+    .data(iTypes)
+    .enter()
+    .append("text")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScale(iTypes[0].amount/2)}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
+        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
+        if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
+      })
+      .attr("y", 30)
+      .style("text-anchor", "middle")
+      .style("font-weight", 700)
+      .text(function(d){return d.type})
+
+
+   programming.selectAll(".typePercents")
+    .data(iTypes)
+    .enter()
+    .append("text")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScale(iTypes[0].amount/2)}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
+        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
+        if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
+      })
+      .attr("y", 45)
+      .style("text-anchor", "middle")
+      .text(function(d){return e(d.amount*100/total) + "%"})
+}
+
+CTPS.demoApp.generateSubregions = function(data) { 
+  var iTypes = [{ "type": "IC", "amount": 0},
+               { "type": "MAGIC", "amount": 0},
+               { "type": "MW", "amount": 0},
+               { "type": "NSTF", "amount": 0},
+               { "type": "NSPC", "amount": 0},
+               { "type": "SSC", "amount": 0},
+               { "type": "SWAP", "amount": 0},
+               { "type": "TRIC", "amount": 0},
+               { "type": "All", "amount": 0}];
+
+  var total = 0;
+
+  data.forEach(function(d){
+    iTypes.forEach(function(e){
+      if (d.Subregion == e.type && d.currentFunding != 2017 && d.currentFunding != 2023){
+        e.amount += +d.Total_Cost_All_Fys;
+        total += +d.Total_Cost_All_Fys;
+      }
+    })
+  })
+
+  var max = [];
+  iTypes.forEach(function(d){
+    max.push(+d.amount);
+  })
+
+  var programming = d3.select("#subregions").append("svg")
+                  .attr("width", "100%")
+                  .attr("height", 200)
+                  .attr("class", "current")
+
+  var w = $("#subregions").width();
+
+  var xScale = d3.scalePoint()
+                .domain(["IC", "MAGIC", "MW", "NSTF", "NSPC", "SSC", "SWAP", "TRIC", "All"])
+                .range([80, w - 80])
+
+  var yScale = d3.scaleLinear()
+                .domain([0, d3.max(max)])
+                .range([180, 40])
+
+  var yScaleH = d3.scaleLinear()
+                .domain([0, d3.max(max)])
+                .range([0, 140])
+
+  programming.selectAll(".subregions")
+    .data(iTypes)
+    .enter()
+    .append("rect")
+      .attr("x", function(d) { return xScale(d.type)})
+      .attr("y", function(d) { return yScale(d.amount)})
+      .attr("width", 40)
+      .attr("height", function(d) { return yScaleH(d.amount)})
+      .attr("fill", "grey")
+
+  programming.selectAll(".subregionLabels")
+    .data(iTypes)
+    .enter()
+    .append("text")
+      .attr("x", function(d) { return xScale(d.type) + 20})
+      .attr("y", function(d) { return yScale(d.amount) - 30})
+      .style("text-anchor", "middle")
+      .style("font-weight", 700)
+      .text(function(d){return d.type})
+
+
+   programming.selectAll(".subregionsAmounts")
+    .data(iTypes)
+    .enter()
+    .append("text")
+      .attr("x", function(d) { return xScale(d.type) + 20})
+      .attr("y", function(d) { return yScale(d.amount) - 15})
+      .style("text-anchor", "middle")
+      .text(function(d){return "$" + f(d.amount);})
+}
+
+function expandCollapse() {
+    var change = document.getElementById("toggle");
+    if (change.innerHTML == "Expand Table")
+    {
+        change.innerHTML = "Collapse Table";
+        document.getElementById('worksheet').style.height = '300px';
+    }
+    else {
+        change.innerHTML = "Expand Table";
+        document.getElementById('worksheet').style.height = '50px';
+    }
 }
