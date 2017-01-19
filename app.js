@@ -2,6 +2,7 @@ var CTPS = {};
 CTPS.demoApp = {};
 var f = d3.format(",")
 var e = d3.format(".1f")
+var g = d3.format("d")
 
 //Using the queue.js library
 d3.queue()
@@ -28,9 +29,9 @@ var investment = d3.scaleOrdinal()
 function sortFirst (data, property, targets) { 
   d3.selectAll(".currentWorksheet").remove(); //clear worksheet
 
-  data.sort(function(a, b) { //sort by year is the default 
-      if (a.Earliest_Advertisement_Year < b.Earliest_Advertisement_Year) return -1;
-      if (a.Earliest_Advertisement_Year > b.Earliest_Advertisement_Year) return 1;
+  data.sort(function(a, b) { //sort by evaluation is the default 
+      if (a.Evaluation_Rating < b.Evaluation_Rating) return -1;
+      if (a.Evaluation_Rating > b.Evaluation_Rating) return 1;
       return 0;
   })
   if (property == "Programmed") { //sort backwards for programmed
@@ -68,8 +69,12 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
   var yearLabels = ["FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 & Beyond", "Not Programmed", ""];
 
   var projectIDs = [];
+  var singleProjects = [];
   data.forEach(function(i){
-  	projectIDs.push(i.TIP_ID);
+    if (i.Multiyear == 1) { 
+  	 projectIDs.push(i.TIP_ID);
+     singleProjects.push(i);
+    }
   })
 
   var tip = d3.tip()
@@ -83,11 +88,25 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
 
   worksheet.call(tip); 
 
+  var tipInflation = d3.tip()
+    .attr('class', 'd3-tip-inflation')
+    .offset([0, 10])
+    .html(function(d){
+      var m = 1;
+      var difference = uniYear - 2018; 
+      while (difference > 0) { 
+        m = m * 1.04; 
+        difference --;
+      }
+      return "$" + f(g((m * uniCost))); 
+    })
+
   var tipWarning = d3.tip()
     .attr('class', 'd3-tip')
     .offset([0, 10])
     .html("You removed a <b>programmed</b> project.")
 
+  worksheet.call(tipInflation); 
   worksheet.call(tipWarning); 
 
   var labels = d3.scaleOrdinal() //labels project descriptors
@@ -131,7 +150,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
       		.call(wrap, 70);
 
   worksheet.selectAll(".fullRow") //outline rectangles
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("rect")
       .attr("class", function(d) { return "fullRow id" + d.TIP_ID;})
@@ -159,7 +178,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
   	   })
 
   worksheet.selectAll(".proponent")
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("text")
       .attr("class", function(d) { return "proponent id" + d.TIP_ID;})
@@ -170,7 +189,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
       .call(wrapt, 85)
 
  	worksheet.selectAll(".subregion")
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("text")
       .attr("class", function(d) { return "subregion id" + d.TIP_ID;})
@@ -181,18 +200,22 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
       .call(wrapt, 80)
 
    worksheet.selectAll(".tipId")
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("text")
       .attr("class", function(d) { return "tipId id" + d.TIP_ID;})
       .attr("x", 180)
       .attr("y", function(d) { return projects(d.TIP_ID); })
       .style("fill", "black")
+      .style("font-weight", function(d){ 
+        if (d.Programmed == 1) { return 700;}
+        else { return 300 }
+      })
       .text(function(d) { return d.TIP_ID})
       .call(wrapt, 80)
 
    worksheet.selectAll(".name")
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("text")
       .attr("class", function(d) { return "name id" + d.TIP_ID;})
@@ -203,7 +226,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
       .call(wrapt, 180)
 
 	worksheet.selectAll(".evaluation")
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("text")
       .attr("class", function(d) { return "evaluation id" + d.TIP_ID;})
@@ -212,20 +235,21 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
       .text( function(d) { return d.Evaluation_Rating})
 
 	worksheet.selectAll(".cost")
-    .data(data)
+    .data(singleProjects)
     .enter()
     .append("text")
       .attr("class", function(d) { return "cost id" + d.TIP_ID;})
-      .attr("x", 540)
+      .attr("x", 600)
       .attr("y", function(d) { return projects(d.TIP_ID); })
       .style("fill", "black")
+      .style("text-anchor", "end")
       .text(function(d) { return "$" + f(d.Total_Cost_All_Fys)})
       .call(wrapt, 180)
 
  yearbins = [{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0}];   
 
  for (i = 2017; i < 2025; i++) { //appends grey rectangles
- 	data.forEach(function(d){
+ 	singleProjects.forEach(function(d){
     d.currentFunding = +d.Earliest_Advertisement_Year;
  		if (d.currentFunding <= i){
 		worksheet.append("rect")
@@ -250,13 +274,21 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
              var thisYear = this.getAttribute("class").split(' ', 3)[1];
 					   worksheet.selectAll("." + thisId + "." + thisYear)
 			      		.style("stroke-width", 2)
+
+             uniYear = +thisYear.substring(2);
+             uniCost = d.Total_Cost_All_Fys;
+
+             if (uniYear > 2018 && uniYear < 2024) { 
+                tipInflation.show();
+             }
 			     })
 			    .on("mouseleave", function(){
 			  		 var thisId = this.getAttribute("class").split(' ', 3)[0];
              var thisYear = this.getAttribute("class").split(' ', 3)[1];
              worksheet.selectAll("." + thisId + "." + thisYear)
 			      		.style("stroke-width", 0)
-             tipWarning.hide()
+             tipWarning.hide();
+             tipInflation.hide();
           })
           .on("click", function(){
               var thisId = this.getAttribute("class").split(' ', 3)[0];
@@ -281,23 +313,54 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
               updateFunctions(yearNum);
 
               d3.selectAll(".current").remove();
+              worksheet.selectAll(".inflated").remove();
 
-              CTPS.demoApp.generateProgramming(data, targets);
-              CTPS.demoApp.generateFunders(data, "CMAQ", targets);
-              CTPS.demoApp.generateFunders(data, "HSIP", targets);
-              CTPS.demoApp.generateFunders(data, "TAP", targets);
-              CTPS.demoApp.generateBreakdowns(data);
-              CTPS.demoApp.generateSubregions(data);
+              CTPS.demoApp.generateProgramming(singleProjects, targets);
+              CTPS.demoApp.generateFunders(singleProjects, "CMAQ", targets);
+              CTPS.demoApp.generateFunders(singleProjects, "HSIP", targets);
+              CTPS.demoApp.generateFunders(singleProjects, "TAP", targets);
+              CTPS.demoApp.generateBreakdowns(singleProjects);
+              CTPS.demoApp.generateSubregions(singleProjects);
+              CTPS.demoApp.generateCommunities(singleProjects);
+
+              worksheet.selectAll(".inflated") // text labels
+                .data(singleProjects)
+                .enter()
+                .append("text")
+                  .attr("class", "inflated")
+                  .attr("x", function(d) { 
+                    return years(d.currentFunding) + 5;
+                  })
+                  .attr("y", function(d) { 
+                    return projects(d.TIP_ID) + 3;
+                  })
+                  .text(function(d){
+                    if (d.Programmed == 1) { 
+                      var difference = +d.currentFunding - 2018;
+                      var m = 1;  
+                      while (difference > 0) { 
+                          m = m * 1.04; 
+                          difference--;
+                      }
+                      return f(parseInt(d.Total_Cost_All_Fys * m)); 
+                    }
+                  })
           })
   		}
     function updateTotals (year) {
       if (+d.currentFunding == year && d.Programmed == 1){
         var m = 1; //inflation multiplier
-        if (i > 2018) { m = Math.exp(1.04, i - 2018)} //adjusts inflation multiplier according to year
-        yearbins[i - 2017].total += parseInt(+d.Total_Cost_All_Fys) * m;
-        yearbins[i - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys) * m;
-        yearbins[i - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys) * m;
-        yearbins[i - 2017].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys) * m;
+        if (year > 2018) {  //adjusts inflation multiplier according to year
+          var difference = year - 2018; 
+          while (difference > 0) { 
+            m = m * 1.04; 
+            difference--;
+          }
+        } 
+        yearbins[year - 2017].total += parseInt(+d.Total_Cost_All_Fys) * m;
+        yearbins[year - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys) * m;
+        yearbins[year - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys) * m;
+        yearbins[year - 2017].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys) * m;
       }
     }
     updateTotals(i);
@@ -306,12 +369,18 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
 
 function updateFunctions (year) {
   yearbins = [{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0},{"total":0,"CMAQ":0,"HSIP":0,"TAP":0}];   
-  for (i = 2017; i < 2023; i++) { //data for bottom dashboard
-    data.forEach(function(d){
+  for (i = 2017; i < 2024; i++) { //data for bottom dashboard
+    singleProjects.forEach(function(d){ 
       d.currentFunding == year;
       if (d.currentFunding == i && d.Programmed == 1){
         var m = 1; //inflation multiplier
-        if (i > 2018) { m = Math.exp(1.04, i - 2018)} //adjusts inflation multiplier according to year
+        if (i > 2018) { //adjusts inflation multiplier according to year
+          var difference = i - 2018; 
+          while (difference > 0) { 
+            m = m * 1.04; 
+            difference --;
+          }
+        } 
         yearbins[i - 2017].total += parseInt(+d.Total_Cost_All_Fys) * m;
         yearbins[i - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys) * m;
         yearbins[i - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys) * m;
@@ -470,9 +539,10 @@ multiyear.selectAll(".fullRow") //outline rectangles
     .enter()
     .append("text")
       .attr("class", function(d) { return "cost id" + d.TIP_ID;})
-      .attr("x", 540)
+      .attr("x", 600)
       .attr("y", function(d) { return multilabels(d.TIP_ID); })
       .style("fill", "black")
+      .style("text-anchor", "end")
       .text(function(d) { return "$" + f(d.Total_Cost_All_Fys)})
       .call(wrapt, 180)
 
@@ -506,9 +576,9 @@ multiyear.selectAll(".fullRow") //outline rectangles
       })
       .attr("x", years(i) + 4)
       .attr("y", multilabels(d.TIP_ID))
-      .style("font-size", 8)
+      .style("font-size", 10)
       .text(function() { 
-        if (+d.Earliest_Advertisement_Year <= i) { return "$" + f(d["FFY_" + i]) }
+        if (+d.Earliest_Advertisement_Year <= i) { return f(d["FFY_" + i]) }
         else { return null}
       })
       .on("mouseover", function() {
@@ -518,7 +588,7 @@ multiyear.selectAll(".fullRow") //outline rectangles
         d3.select(this).style("fill", null);
       })
       .on("click", function(d) {
-        var p = this.parentNode;
+        var p = this.parentNode; // define multiyear variables to use later
         var dollars = this.getAttribute("class").split(" ", 4)[2].substring(1);
         var sametip = this.getAttribute("class").split(" ", 4)[0];
         var sameyear = this.getAttribute("class").split(" ", 4)[1];
@@ -569,18 +639,33 @@ multiyear.selectAll(".fullRow") //outline rectangles
 
                                 var txt = inp.node().value;
 
-                                if (txt > 0) { 
+                                if (txt > 0) { // THE HEART OF MULTIYEAR TEXT
+                                  //Change rectangle color
                                   multiyear.selectAll("." + sametip + "." + sameyear)
                                     .style("fill", investment(sametype))
-                                } else {
+                                  //Update bottom dashboard
+                                  var my = sameyear.substring(2);
+                                  yearbins[my - 2017].total += parseInt(+txt);
+                                  yearbins[my - 2017].CMAQ += parseInt(+txt);
+                                  yearbins[my - 2017].HSIP += parseInt(+txt);
+                                  yearbins[my - 2017].TAP += parseInt(+txt);
+
+                                  d3.selectAll(".current").remove();
+
+                                  CTPS.demoApp.generateProgramming(data, targets);
+                                  CTPS.demoApp.generateFunders(data, "CMAQ", targets);
+                                  CTPS.demoApp.generateFunders(data, "HSIP", targets);
+                                  CTPS.demoApp.generateFunders(data, "TAP", targets);
+                                  CTPS.demoApp.generateBreakdowns(data);
+                                  CTPS.demoApp.generateSubregions(data);
+                                  CTPS.demoApp.generateCommunities(data);
+                                } else { // return to unselected state
                                   multiyear.selectAll("." + sametip + "." + sameyear)
                                     .style("fill", "lightgrey")
                                 }
                                 
                                 el.text(function(d) { return "$" + f(txt); });
 
-                                // odd. Should work in Safari, but the debugger crashes on this instead.
-                                // Anyway, it SHOULD be here and it doesn't hurt otherwise.
                                 p_el.select("foreignObject").remove();
                             }
                         });
@@ -715,7 +800,7 @@ CTPS.demoApp.generateProgramming = function(data, targets) {
       .attr("y", yScalePos(d.total) - 10)
       .style("fill", "black")
       .style("text-anchor", "middle")
-      .text("$" + f(d.total))
+      .text("$" + f(g(d.total)))
   })
 
   programming.selectAll(".targetsTotal")
@@ -801,7 +886,7 @@ CTPS.demoApp.generateFunders = function(data, funder, targets) {
       .style("fill", "black")
       .style("font-size", 10)
       .style("text-anchor", "middle")
-      .text("$" + f(d[funder]))
+      .text("$" + f(e(d[funder])))
   })
 
    programming.selectAll(".targets" + funder)
@@ -826,6 +911,12 @@ CTPS.demoApp.generateBreakdowns = function(data) {
                { "type": "INT", "amount": 0},
                { "type": "MI", "amount": 0}];
 
+ var iGoals = [{ "type": "B/P", "amount": 5},
+               { "type": "CS", "amount": 37},
+               { "type": "CT", "amount": 2},
+               { "type": "INT", "amount": 6},
+               { "type": "MI", "amount": 50}];
+
   var total = 0;
 
   data.forEach(function(d){
@@ -840,18 +931,40 @@ CTPS.demoApp.generateBreakdowns = function(data) {
 
   var programming = d3.select("#investmentCategory").append("svg")
                   .attr("width", "100%")
-                  .attr("height", 100)
+                  .attr("height", 200)
                   .attr("class", "current")
+
+  programming.append("text")
+    .attr("x", 80)
+    .attr("y", 75)
+    .style("text-anchor", "end")
+    .style("font-weight", 700)
+    .text("Your Scenario")
+
+  programming.append("text")
+    .attr("x", 80)
+    .attr("y", 122)
+    .style("text-anchor", "end")
+    .style("font-weight", 700)
+    .text("Targets")
 
   var w = $("#investmentCategory").width();
 
   var xScale = d3.scaleLinear()
                 .domain([0, total])
-                .range([80, w - 80])
+                .range([100, w - 50])
 
   var xScaleL = d3.scaleLinear()
                 .domain([0, total])
-                .range([0, w - 160])
+                .range([0, w - 150])
+
+  var xScaleC = d3.scaleLinear()
+                .domain([0, 100])
+                .range([100, w - 50])
+
+  var xScaleCL = d3.scaleLinear()
+                .domain([0, 100])
+                .range([0, w - 150])
 
   programming.selectAll(".types")
     .data(iTypes)
@@ -885,7 +998,6 @@ CTPS.demoApp.generateBreakdowns = function(data) {
       .style("font-weight", 700)
       .text(function(d){return d.type})
 
-
    programming.selectAll(".typePercents")
     .data(iTypes)
     .enter()
@@ -900,6 +1012,56 @@ CTPS.demoApp.generateBreakdowns = function(data) {
       .attr("y", 45)
       .style("text-anchor", "middle")
       .text(function(d){return e(d.amount*100/total) + "%"})
+
+  //Show targets 
+    programming.selectAll(".goals")
+    .data(iGoals)
+    .enter()
+    .append("rect")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScaleC(0)}
+        if (d.type == "CS") {return xScaleC(iGoals[0].amount)}
+        if (d.type == "CT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount)}
+        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount)}
+        if (d.type == "MI") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +iGoals[3].amount)}
+      })
+      .attr("y", 110)
+      .attr("width", function(d){ return xScaleCL(d.amount);})
+      .attr("height", 20)
+      .attr("fill", function(d){ return investment(d.type)})
+      .style("fill-opacity", .3)
+      .attr("stroke", function(d){ return investment(d.type)})
+
+  programming.selectAll(".goalLabels")
+    .data(iGoals)
+    .enter()
+    .append("text")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScaleC(iGoals[0].amount/2)}
+        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +(iGoals[1].amount/2))}
+        if (d.type == "CT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +(iGoals[2].amount/2))}
+        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +(iGoals[3].amount/2))}
+        if (d.type == "MI") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +iGoals[3].amount + +(iGoals[4].amount/2))}
+      })
+      .attr("y", 150)
+      .style("text-anchor", "middle")
+      .style("font-weight", 700)
+      .text(function(d){return d.type})
+
+   programming.selectAll(".goalPercents")
+    .data(iGoals)
+    .enter()
+    .append("text")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScaleC(iGoals[0].amount/2)}
+        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +(iGoals[1].amount/2))}
+        if (d.type == "CT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +(iGoals[2].amount/2))}
+        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +(iGoals[3].amount/2))}
+        if (d.type == "MI") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +iGoals[3].amount + +(iGoals[4].amount/2))}
+      })
+      .attr("y", 165)
+      .style("text-anchor", "middle")
+      .text(function(d){return e(d.amount) + "%"})
 }
 
 CTPS.demoApp.generateCommunities = function(data) { 
@@ -1055,18 +1217,30 @@ CTPS.demoApp.generateSubregions = function(data) {
 }
 
 function expandCollapse() {
-    var change = document.getElementById("toggle");
-    if (change.innerHTML == "Expand Table")
+    var change = document.getElementById("toggle1");
+    if (change.innerHTML == "Expand Single Year Table")
     {
-        change.innerHTML = "Collapse Table";
-        document.getElementById('worksheet').style.height = '300px';
+        change.innerHTML = "Collapse Multi Year Table";
+        document.getElementById('worksheet').style.height = '600px';
     }
     else {
-        change.innerHTML = "Expand Table";
-        document.getElementById('worksheet').style.height = '50px';
+        change.innerHTML = "Expand Single Year Table";
+        document.getElementById('worksheet').style.height = '0px';
     }
 }
 
+function expandCollapseM() {
+    var change = document.getElementById("toggle2");
+    if (change.innerHTML == "Expand Multi-year Table")
+    {
+        change.innerHTML = "Collapse Multi-year Table";
+        document.getElementById('multiyear').style.height = '300px';
+    }
+    else {
+        change.innerHTML = "Expand Multi-year Table";
+        document.getElementById('multiyear').style.height = '0px';
+    }
+}
 
 function sortProponent() {
   sortFirst (tipUniverse, "Proponent", targetUniverse);

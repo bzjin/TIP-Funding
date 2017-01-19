@@ -21,7 +21,9 @@
 		<h1> TIP Funding Dashboard</h1>
 
 		<h2> Live Worksheet / Scenario Planning Tool</h2>
-			<button id="toggle" type="button" class="btn btn-default" onclick="expandCollapse()">Collapse Table</button>
+			<button id="toggle1" type="button" class="btn btn-default" onclick="expandCollapse()">Collapse Single Year Table</button>
+			<button id="toggle2" type="button" class="btn btn-default" onclick="expandCollapseM()">Collapse Multi-year Table</button>
+
 			<div class="dropdown">
 			  <button class="dropdown-toggle" type="button" data-toggle="dropdown">Sort by...
 			  <span class="caret"></span></button>
@@ -63,12 +65,12 @@
 			<div id="multiyear" class="col-md-12"></div>
 
 		<h2> Live Dashboard </h2>
-			<h4> Programming by FFY </h4>
+			<h4> Programming by FFY: Comparison to Target Funding Limit</h4>
 				<div id="programming" class="col-md-12"></div>
 			<h4> Funding Targets by FFY </h4>
-				<div id="CMAQ" class="col-md-4"></div>
-				<div id="HSIP" class="col-md-4"></div>
-				<div id="TAP" class="col-md-4"></div>
+				<div id="CMAQ" class="col-md-4"><h3>CMAQ</h3></div>
+				<div id="HSIP" class="col-md-4"><h3>HSIP</h3></div>
+				<div id="TAP" class="col-md-4"><h3>TAP</h3></div>
 			<h4> Funding Allocaton (5-Year TIP) </h4>
 				<p>Allocation by Investment Category by Percent</p>
 					<div id="investmentCategory" class="col-md-12"></div>

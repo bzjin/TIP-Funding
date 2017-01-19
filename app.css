@@ -89,7 +89,7 @@ span {
 }
 
 #worksheet { 
-  height: 300px;
+  height: 600px;
   overflow-y: scroll;
   margin-bottom: 30px;
 }
@@ -111,7 +111,7 @@ span {
 }
 
 #multiyear { 
-  height: 200px;
+  height: 300px;
   overflow-y: scroll;
   margin-bottom: 30px;
 }
@@ -145,6 +145,23 @@ span {
 
 .d3-tip > p{
   color: white;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.d3-tip-inflation {
+  line-height: 1;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  color: black;
+  font-weight: 100;
+  font-size: 12px;
+  border-radius: 2px;
+  z-index: 999;
+}
+
+.d3-tip-inflation > p{
+  color: black;
   font-weight: 700;
   font-size: 12px;
 }
