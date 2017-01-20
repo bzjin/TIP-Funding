@@ -323,6 +323,8 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
               CTPS.demoApp.generateSubregions(singleProjects);
               CTPS.demoApp.generateCommunities(singleProjects);
 
+              console.log(yearbins);
+
               worksheet.selectAll(".inflated") // text labels
                 .data(singleProjects)
                 .enter()
@@ -358,9 +360,9 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
           }
         } 
         yearbins[year - 2017].total += parseInt(+d.Total_Cost_All_Fys) * m;
-        yearbins[year - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys) * m;
-        yearbins[year - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys) * m;
-        yearbins[year - 2017].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys) * m;
+        yearbins[year - 2017].CMAQ += parseInt(+d.CMAQ) * m;
+        yearbins[year - 2017].HSIP += parseInt(+d.HSIP) * m;
+        yearbins[year - 2017].TAP += parseInt(+d.TAP) * m;
       }
     }
     updateTotals(i);
@@ -382,9 +384,9 @@ function updateFunctions (year) {
           }
         } 
         yearbins[i - 2017].total += parseInt(+d.Total_Cost_All_Fys) * m;
-        yearbins[i - 2017].CMAQ += parseInt(+d.CMAQ * +d.Total_Cost_All_Fys) * m;
-        yearbins[i - 2017].HSIP += parseInt(+d.HSIP * +d.Total_Cost_All_Fys) * m;
-        yearbins[i - 2017].TAP += parseInt(+d.TAP * +d.Total_Cost_All_Fys) * m;
+        yearbins[i - 2017].CMAQ += parseInt(+d.CMAQ) * m;
+        yearbins[i - 2017].HSIP += parseInt(+d.HSIP) * m;
+        yearbins[i - 2017].TAP += parseInt(+d.TAP) * m;
       }
     })
 }}
@@ -643,12 +645,27 @@ multiyear.selectAll(".fullRow") //outline rectangles
                                   //Change rectangle color
                                   multiyear.selectAll("." + sametip + "." + sameyear)
                                     .style("fill", investment(sametype))
-                                  //Update bottom dashboard
-                                  var my = sameyear.substring(2);
-                                  yearbins[my - 2017].total += parseInt(+txt);
-                                  yearbins[my - 2017].CMAQ += parseInt(+txt);
-                                  yearbins[my - 2017].HSIP += parseInt(+txt);
-                                  yearbins[my - 2017].TAP += parseInt(+txt);
+
+                                  var element = document.querySelector("." + sametip + "." + sameyear);
+                                  
+                                  if (element.getAttribute("class").indexOf("text") == -1) {
+                                    element.classList.add("text" + txt);
+                                    //Update bottom dashboard
+                                    var my = sameyear.substring(2);
+                                    yearbins[my - 2017].total += parseInt(+txt);
+
+                                  } else { 
+                                    var indexTxt = element.getAttribute("class").indexOf("text");
+                                    var oldTxt = element.getAttribute("class").substring(indexTxt + 4);
+
+                                    element.classList.remove("text" + oldTxt);
+                                    element.classList.add("text" + txt);
+                                    //console.log(element);
+
+                                    var my = sameyear.substring(2);
+                                    yearbins[my - 2017].total -= parseInt(+oldTxt); //subtract old value
+                                    yearbins[my - 2017].total += parseInt(+txt); //add new value
+                                  }
 
                                   d3.selectAll(".current").remove();
 
@@ -659,14 +676,13 @@ multiyear.selectAll(".fullRow") //outline rectangles
                                   CTPS.demoApp.generateBreakdowns(data);
                                   CTPS.demoApp.generateSubregions(data);
                                   CTPS.demoApp.generateCommunities(data);
+
                                 } else { // return to unselected state
                                   multiyear.selectAll("." + sametip + "." + sameyear)
                                     .style("fill", "lightgrey")
                                 }
                                 
                                 el.text(function(d) { return "$" + f(txt); });
-
-                                p_el.select("foreignObject").remove();
                             }
                         });
       });
@@ -886,7 +902,7 @@ CTPS.demoApp.generateFunders = function(data, funder, targets) {
       .style("fill", "black")
       .style("font-size", 10)
       .style("text-anchor", "middle")
-      .text("$" + f(e(d[funder])))
+      .text("$" + f(g(d[funder])))
   })
 
    programming.selectAll(".targets" + funder)
@@ -993,7 +1009,7 @@ CTPS.demoApp.generateBreakdowns = function(data) {
         if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
       })
-      .attr("y", 30)
+      .attr("y", 10)
       .style("text-anchor", "middle")
       .style("font-weight", 700)
       .text(function(d){return d.type})
@@ -1009,7 +1025,7 @@ CTPS.demoApp.generateBreakdowns = function(data) {
         if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
       })
-      .attr("y", 45)
+      .attr("y", 25)
       .style("text-anchor", "middle")
       .text(function(d){return e(d.amount*100/total) + "%"})
 
