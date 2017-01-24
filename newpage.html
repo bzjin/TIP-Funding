@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+	<meta charset="utf-8">
+	<title>TIP Funding Dashboard</title>
+
+	<!-- D3 Library --> <script src="d3.v4.min.js"></script>
+    <!-- D3-Tip --> <script src="d3-tip.js"></script>
+	<!-- Google Fonts --> <link href="google-fonts.css" rel="stylesheet"> 
+	<!-- Jquery -->   <script src="jquery-1.12.4.min.js"></script>
+  	<script src="jquery-1.12.1-ui.js"></script>
+	<!-- Bootstrap--> <script src="bootstrap.min.js"></script> <link rel="stylesheet" href="bootstrap.min.css">
+
+	<link rel="stylesheet" href="app.css"/>
+	<script src="app.js"></script>
+</head>
+<script> 
+		$(document).ready(function(){
+		    //This sessionStorage.getItem(); is also a predefined function in javascript
+		    //will retrieve session and get the value;
+		    var a = sessionStorage.getItem("sent");
+		    document.getElementById("scenario").innerHTML = a;
+		});
+</script>
+<body>
+
+<div id="scenario"></div>
+
+</body>
+
+</html>

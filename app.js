@@ -17,7 +17,6 @@ d3.queue()
     CTPS.demoApp.generateBreakdowns(results[0]);
     CTPS.demoApp.generateSubregions(results[0]);
     CTPS.demoApp.generateCommunities(results[0]);
-
     tipUniverse = results[0];
     targetUniverse = results [1];
 })
@@ -83,7 +82,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
     .html(function(d) {
       var add_info = "";
       if (d.Additional_Information != "") { add_info = "<p><br>Additional Information:</p>" + d.Additional_Information;}
-      return "<p>Funding Distribution:</p>CMAQ: " + parseInt(100*d.CMAQ) + "%<br>HSIP: " + parseInt(100*d.HSIP) + "%<br>TAP: " + parseInt(100*d.TAP) + "%" + add_info;
+      return "<p>Funding Distribution:</p>CMAQ: $" + f(g(d.HSIP)) + "<br>HSIP: $" + f(g(d.HSIP)) + "<br>TAP: $" + f(g(d.TAP)) + add_info;
     })
 
   worksheet.call(tip); 
@@ -1014,7 +1013,7 @@ CTPS.demoApp.generateBreakdowns = function(data) {
       .style("font-weight", 700)
       .text(function(d){return d.type})
 
-   programming.selectAll(".typePercents")
+  programming.selectAll(".typePercents")
     .data(iTypes)
     .enter()
     .append("text")
@@ -1025,9 +1024,24 @@ CTPS.demoApp.generateBreakdowns = function(data) {
         if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
       })
-      .attr("y", 25)
+      .attr("y", 28)
       .style("text-anchor", "middle")
       .text(function(d){return e(d.amount*100/total) + "%"})
+
+  programming.selectAll(".typeDollars")
+    .data(iTypes)
+    .enter()
+    .append("text")
+      .attr("x", function(d) {
+        if (d.type == "B/P") {return xScale(iTypes[0].amount/2)}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
+        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
+        if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
+      })
+      .attr("y", 45)
+      .style("text-anchor", "middle")
+      .text(function(d){return "$" + f(g(d.amount));})
 
   //Show targets 
     programming.selectAll(".goals")
@@ -1352,54 +1366,15 @@ function all() {
   sortFirst (tipUniverse, "Programmed", targetUniverse);
 }
 
-function convertArrayOfObjectsToCSV(args) {
-    var result, ctr, keys, columnDelimiter, lineDelimiter, datum;
-
-    datum = args.datum || null;
-    if (datum == null || !datum.length) {
-        return null;
+function saveCSV() {
+    if (confirm("Click confirm to open a new window with the scenario CSV") == true) {
+        var input = [];
+        tipUniverse.forEach(function(d){
+          input.push(d);
+        })
+        sessionStorage.setItem("sent", input); 
+        window.open('newpage.html', "_blank");
+    } else {
     }
-
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
-
-    keys = Object.keys(datum[0]);
-
-    result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
-
-    datum.forEach(function(item) {
-        ctr = 0;
-        keys.forEach(function(key) {
-            if (ctr > 0) result += columnDelimiter;
-
-            result += item[key];
-            ctr++;
-        });
-        result += lineDelimiter;
-    });
-
-    return result;
 }
 
-function downloadCSV(args) {
-    var datum, filename, link;
-
-    var csv = convertArrayOfObjectsToCSV({
-        datum: tipUniverse
-    });
-    if (csv == null) return;
-
-    filename = args.filename || 'export.csv';
-
-    if (!csv.match(/^datum:text\/csv/i)) {
-        csv = 'datum:text/csv;charset=utf-8,' + csv;
-    }
-    datum = encodeURI(csv);
-
-    link = document.createElement('a');
-    link.setAttribute('href', datum);
-    link.setAttribute('download', filename);
-    link.click();
-}
