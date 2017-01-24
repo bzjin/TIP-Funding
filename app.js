@@ -68,7 +68,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
   var yearLabels = ["FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 & Beyond", "Not Programmed", ""];
 
   var projectIDs = [];
-  var singleProjects = [];
+  singleProjects = [];
   data.forEach(function(i){
     if (i.Multiyear == 1) { 
   	 projectIDs.push(i.TIP_ID);
@@ -437,7 +437,7 @@ function updateFunctions (year) {
                   .attr("height", 300)
                   .style("background-color", "rgba(243,243,243,.5)")
 
- var multiproj = [];
+ multiproj = [];
  var multiID = [];
 
  data.forEach(function(i){
@@ -588,7 +588,7 @@ multiyear.selectAll(".fullRow") //outline rectangles
       .on("mouseout", function() {
         d3.select(this).style("fill", null);
       })
-      .on("click", function(d) {
+      .on("click", function() {
         var p = this.parentNode; // define multiyear variables to use later
         var dollars = this.getAttribute("class").split(" ", 4)[2].substring(1);
         var sametip = this.getAttribute("class").split(" ", 4)[0];
@@ -652,7 +652,7 @@ multiyear.selectAll(".fullRow") //outline rectangles
                                     //Update bottom dashboard
                                     var my = sameyear.substring(2);
                                     yearbins[my - 2017].total += parseInt(+txt);
-
+                                    d["FFY_" + my] = parseInt(+txt);
                                   } else { 
                                     var indexTxt = element.getAttribute("class").indexOf("text");
                                     var oldTxt = element.getAttribute("class").substring(indexTxt + 4);
@@ -663,7 +663,9 @@ multiyear.selectAll(".fullRow") //outline rectangles
 
                                     var my = sameyear.substring(2);
                                     yearbins[my - 2017].total -= parseInt(+oldTxt); //subtract old value
+                                    d["FFY_" + my] -= parseInt(+oldTxt);
                                     yearbins[my - 2017].total += parseInt(+txt); //add new value
+                                    d["FFY_" + my] = parseInt(+txt);
                                   }
 
                                   d3.selectAll(".current").remove();
@@ -1250,7 +1252,7 @@ function expandCollapse() {
     var change = document.getElementById("toggle1");
     if (change.innerHTML == "Expand Single Year Table")
     {
-        change.innerHTML = "Collapse Multi Year Table";
+        change.innerHTML = "Collapse Single Year Table";
         document.getElementById('worksheet').style.height = '600px';
     }
     else {
@@ -1369,10 +1371,14 @@ function all() {
 function saveCSV() {
     if (confirm("Click confirm to open a new window with the scenario CSV") == true) {
         var input = [];
-        tipUniverse.forEach(function(d){
+        singleProjects.forEach(function(d){
+          input.push(d);
+          d["FFY_" + d.currentFunding] = d.Total_Cost_All_Fys;
+        })
+        multiproj.forEach(function(d){
           input.push(d);
         })
-        sessionStorage.setItem("sent", input); 
+        sessionStorage.setItem("sent", JSON.stringify(input)); 
         window.open('newpage.html', "_blank");
     } else {
     }
