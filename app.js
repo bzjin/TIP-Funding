@@ -9,7 +9,8 @@ d3.queue()
   .defer(d3.csv, "tip.csv")
   .defer(d3.csv, "targets.csv")
   .awaitAll(function(error, results){ 
-    sortFirst (results[0], "Programmed", results[1]);
+    sortFirst (results[0], "currentFunding", results[1]);
+
     CTPS.demoApp.generateProgramming(results[0], results[1]);
     CTPS.demoApp.generateFunders(results[0], "CMAQ", results[1]);
     CTPS.demoApp.generateFunders(results[0], "HSIP", results[1]);
@@ -37,6 +38,12 @@ function sortFirst (data, property, targets) {
     data.sort(function(a, b) {
       if (a.Programmed > b.Programmed) return -1;
       if (a.Programmed < b.Programmed) return 1;
+      return 0;
+    })
+  } else if (property == "Proponent" || property == "Subregion"){
+    data.sort(function(a, b) { //sort for all other properties
+      if (a[property] < b[property]) return -1;
+      if (a[property] > b[property]) return 1;
       return 0;
     })
   } else {
@@ -436,6 +443,7 @@ function updateFunctions (year) {
                   .attr("width", "100%")
                   .attr("height", 300)
                   .style("background-color", "rgba(243,243,243,.5)")
+                  .attr("class", "currentWorksheet")
 
  multiproj = [];
  var multiID = [];
@@ -1371,6 +1379,7 @@ function all() {
 function saveCSV() {
     if (confirm("Click confirm to open a new window with the scenario CSV") == true) {
         var input = [];
+
         singleProjects.forEach(function(d){
           input.push(d);
           d["FFY_" + d.currentFunding] = d.Total_Cost_All_Fys;
@@ -1378,8 +1387,28 @@ function saveCSV() {
         multiproj.forEach(function(d){
           input.push(d);
         })
-        sessionStorage.setItem("sent", JSON.stringify(input)); 
-        window.open('newpage.html', "_blank");
+
+// JSON to CSV Converter
+        function ConvertToCSV(objArray) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var str = '';
+            for (var i = 0; i < array.length; i++) {
+                var line = '';
+                for (var index in array[i]) {
+                    if (line != '') line += ','
+                    line += array[i][index];
+                }
+
+                str += line + '\r\n';
+            }
+            return str;
+        }
+        
+        var newstring = "Proponent,TIP_ID,Project_Name,Investment_Category,Earliest_Advertisement_Year,Multiyear,Community_Type,Subregion,Evaluation_Rating,Total_Target_Funds,Other_Funds,Total_Cost_All_Fys,FFY_2016,FFY_2017,FFY_2018,FFY_2019,FFY_2020,FFY_2021,FFY_2022,FFY_2023,Potential_Funding,Additional_Information,CMAQ,HSIP,TAP,Programmed,Design_Status\n";
+        newstring += ConvertToCSV(input);
+
+        sessionStorage.setItem("sent", newstring); 
+        download(newstring, "scenario.csv", "text/csv");
     } else {
     }
 }
