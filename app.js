@@ -71,7 +71,7 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
 
   var w = $("#worksheet").width();
 
-  var categories = ["Proponent", "Subregion", "TIP ID", "Project Name", "Evaluation Rating", "Total Cost"];
+  var categories = ["Proponent", "Subregion", "TIP ID", "Project Name", "Evaluation Rating", "Current (2017/2018) Cost Estimate"];
   var yearLabels = ["FFY 2017", "FFY 2018", "FFY 2019", "FFY 2020", "FFY 2021", "FFY 2022", "FFY 2023 & Beyond", "Not Programmed", ""];
 
   var projectIDs = [];
@@ -88,8 +88,8 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
     .offset([0, 10])
     .html(function(d) {
       var add_info = "";
-      if (d.Additional_Information != "") { add_info = "<p><br>Additional Information:</p>" + d.Additional_Information;}
-      return "<p>Funding Distribution:</p>CMAQ: $" + f(g(d.HSIP)) + "<br>HSIP: $" + f(g(d.HSIP)) + "<br>TAP: $" + f(g(d.TAP)) + add_info;
+      if (d.Additional_Information != "") { add_info = "<p>Additional Information:</p>" + d.Additional_Information;}
+      return add_info;
     })
 
   worksheet.call(tip); 
@@ -213,10 +213,11 @@ CTPS.demoApp.generateWorksheet = function(data, targets) {
       .attr("x", 180)
       .attr("y", function(d) { return projects(d.TIP_ID); })
       .style("fill", "black")
-      .style("font-weight", function(d){ 
+      .style("font-weight", 300)
+      /*function(d){ 
         if (d.Programmed == 1) { return 700;}
         else { return 300 }
-      })
+      })*/
       .text(function(d) { return d.TIP_ID})
       .call(wrapt, 80)
 
@@ -914,6 +915,15 @@ CTPS.demoApp.generateFunders = function(data, funder, targets) {
       .text("$" + f(g(d[funder])))
   })
 
+  var tipT = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([0, 10])
+    .html(function(d) {
+      return "$" + f(d[funder + "_Target"]);
+    })
+
+  programming.call(tipT); 
+
    programming.selectAll(".targets" + funder)
       .data(targets)
       .enter()
@@ -927,6 +937,12 @@ CTPS.demoApp.generateFunders = function(data, funder, targets) {
         .attr("width", 15)
         .attr("height", 2)
         .style("fill", "red")
+        .on("mouseenter", function(d){
+          tipT.show(d);
+        })
+        .on("mouseleave", function(d){
+          tipT.hide(d);
+        })
 }
 
 CTPS.demoApp.generateBreakdowns = function(data) { 
