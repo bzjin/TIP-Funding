@@ -57,7 +57,7 @@ function sortFirst (data, property, targets) {
 }
 
 CTPS.demoApp.generateWorksheet = function(data, targets) { 
-  var height = data.length * 50;   
+  var height = data.length * 50 - 500;   
   var static = d3.select("#static").append("svg")
                   .attr("width", "100%")
                   .attr("height", 100)
@@ -442,7 +442,7 @@ function updateFunctions (year) {
 //multiple years layout 
  var multiyear = d3.select("#multiyear").append("svg")
                   .attr("width", "100%")
-                  .attr("height", 300)
+                  .attr("height", 500)
                   .style("background-color", "rgba(243,243,243,.5)")
                   .attr("class", "currentWorksheet")
 
@@ -458,7 +458,7 @@ function updateFunctions (year) {
 
   var multilabels = d3.scalePoint() 
               .domain(multiID)
-              .range([30, 260])
+              .range([30, 460])
 
   var projectAxis = d3.axisLeft(multiID);
 
