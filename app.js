@@ -953,10 +953,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
                { "type": "MI", "amount": 0}];
 
  var iGoals = [{ "type": "B/P", "amount": 5},
-               { "type": "CS", "amount": 37},
+               { "type": "CS", "amount": 33},
                { "type": "CT", "amount": 2},
-               { "type": "INT", "amount": 6},
-               { "type": "MI", "amount": 50}];
+               { "type": "INT", "amount": 16},
+               { "type": "MI", "amount": 44}];
 
   var total = 0;
 
@@ -1382,6 +1382,26 @@ function typeINT() {
   var dummy = [];
   tipUniverse.forEach(function(d){
     if (d.Investment_Category == "INT") { 
+      dummy.push(d);
+    }
+  })
+  sortFirst (dummy, "Programmed", targetUniverse);
+}
+
+function filProgrammed() { 
+  var dummy = [];
+  tipUniverse.forEach(function(d){
+    if (d.Programmed == 1) { 
+      dummy.push(d);
+    }
+  })
+  sortFirst (dummy, "Programmed", targetUniverse);
+}
+
+function filUnprogrammed() { 
+  var dummy = [];
+  tipUniverse.forEach(function(d){
+    if (d.Programmed == 0) { 
       dummy.push(d);
     }
   })
