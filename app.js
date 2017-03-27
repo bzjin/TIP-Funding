@@ -946,16 +946,16 @@ CTPS.demoApp.generateFunders = function(data, funder, targets) {
 }
 
 CTPS.demoApp.generateBreakdowns = function(data) { 
-  var iTypes = [{ "type": "B/P", "amount": 0},
-               { "type": "CS", "amount": 0},
-               { "type": "CT", "amount": 0},
+  var iTypes = [{ "type": "CT", "amount": 0},
+               { "type": "B/P", "amount": 0},
                { "type": "INT", "amount": 0},
+               { "type": "CS", "amount": 0},
                { "type": "MI", "amount": 0}];
 
- var iGoals = [{ "type": "B/P", "amount": 5},
-               { "type": "CS", "amount": 33},
-               { "type": "CT", "amount": 2},
-               { "type": "INT", "amount": 16},
+ var iGoals = [{ "type": "CT", "amount": 5},
+               { "type": "B/P", "amount": 33},
+               { "type": "INT", "amount": 2},
+               { "type": "CS", "amount": 16},
                { "type": "MI", "amount": 44}];
 
   var total = 0;
@@ -1012,10 +1012,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("rect")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScale(0)}
-        if (d.type == "CS") {return xScale(iTypes[0].amount)}
-        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount)}
-        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount)}
+        if (d.type == "CT") {return xScale(0)}
+        if (d.type == "B/P") {return xScale(iTypes[0].amount)}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount)}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount)}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount)}
       })
       .attr("y", 60)
@@ -1028,10 +1028,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("text")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScale(iTypes[0].amount/2)}
-        if (d.type == "CS") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
-        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
-        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
+        if (d.type == "CT") {return xScale(iTypes[0].amount/2)}
+        if (d.type == "B/P") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
       })
       .attr("y", 10)
@@ -1044,10 +1044,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("text")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScale(iTypes[0].amount/2)}
-        if (d.type == "CS") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
-        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
-        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
+        if (d.type == "CT") {return xScale(iTypes[0].amount/2)}
+        if (d.type == "B/P") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
       })
       .attr("y", 28)
@@ -1059,10 +1059,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("text")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScale(iTypes[0].amount/2)}
-        if (d.type == "CS") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
-        if (d.type == "CT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
-        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
+        if (d.type == "CT") {return xScale(iTypes[0].amount/2)}
+        if (d.type == "B/P") {return xScale(iTypes[0].amount + +(iTypes[1].amount/2))}
+        if (d.type == "INT") {return xScale(iTypes[0].amount + +iTypes[1].amount + +(iTypes[2].amount/2))}
+        if (d.type == "CS") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +(iTypes[3].amount/2))}
         if (d.type == "MI") {return xScale(iTypes[0].amount + +iTypes[1].amount + +iTypes[2].amount + +iTypes[3].amount + +(iTypes[4].amount/2))}
       })
       .attr("y", 45)
@@ -1075,10 +1075,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("rect")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScaleC(0)}
-        if (d.type == "CS") {return xScaleC(iGoals[0].amount)}
-        if (d.type == "CT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount)}
-        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount)}
+        if (d.type == "CT") {return xScaleC(0)}
+        if (d.type == "B/P") {return xScaleC(iGoals[0].amount)}
+        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount)}
+        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount)}
         if (d.type == "MI") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +iGoals[3].amount)}
       })
       .attr("y", 110)
@@ -1093,10 +1093,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("text")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScaleC(iGoals[0].amount/2)}
-        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +(iGoals[1].amount/2))}
-        if (d.type == "CT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +(iGoals[2].amount/2))}
-        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +(iGoals[3].amount/2))}
+        if (d.type == "CT") {return xScaleC(iGoals[0].amount/2)}
+        if (d.type == "B/P") {return xScaleC(iGoals[0].amount + +(iGoals[1].amount/2))}
+        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +(iGoals[2].amount/2))}
+        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +(iGoals[3].amount/2))}
         if (d.type == "MI") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +iGoals[3].amount + +(iGoals[4].amount/2))}
       })
       .attr("y", 150)
@@ -1109,10 +1109,10 @@ CTPS.demoApp.generateBreakdowns = function(data) {
     .enter()
     .append("text")
       .attr("x", function(d) {
-        if (d.type == "B/P") {return xScaleC(iGoals[0].amount/2)}
-        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +(iGoals[1].amount/2))}
-        if (d.type == "CT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +(iGoals[2].amount/2))}
-        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +(iGoals[3].amount/2))}
+        if (d.type == "CT") {return xScaleC(iGoals[0].amount/2)}
+        if (d.type == "B/P") {return xScaleC(iGoals[0].amount + +(iGoals[1].amount/2))}
+        if (d.type == "INT") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +(iGoals[2].amount/2))}
+        if (d.type == "CS") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +(iGoals[3].amount/2))}
         if (d.type == "MI") {return xScaleC(iGoals[0].amount + +iGoals[1].amount + +iGoals[2].amount + +iGoals[3].amount + +(iGoals[4].amount/2))}
       })
       .attr("y", 165)
